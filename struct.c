@@ -7,4 +7,5 @@ struct desti{
   int id;
   short int cap;
   int pop;
+  int z;
 }
