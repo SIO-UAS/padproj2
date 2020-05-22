@@ -87,9 +87,9 @@ int main()
             if (field_count == 6) {
                 Staedte[row_count -2].iso = myStrDub(field);
             }
-           /* if (field_count == 8 && field == 'primary') {
+            if (field_count == 8 && (strcmp(field,"primary") == 0)) {
                 Staedte[row_count -2].cap = 1;
-            }*/
+            }
             if (field_count == 9) {
                 Staedte[row_count -2].pop = atoi(field);
             }
