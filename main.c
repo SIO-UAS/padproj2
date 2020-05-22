@@ -20,9 +20,11 @@ int main()
     csvSt = fopen("worldcities.csv","r");
 
     if( csvSt == NULL){
-        printf("Fehler beim Öffnen der Datei");
+        printf("Fehler beim ï¿½ffnen der Datei");
     }
-    desti Staedte[1];
+    desti* Staedte = NULL;
+
+    Staedte = (desti*) realloc(Staedte, sizeof(desti));
 
     char buf[1024];
     int row_count = 0;
@@ -35,7 +37,7 @@ int main()
         if (row_count == 1) {
             continue;
         }
-        realloc(Staedte,sizeof(desti)*(row_count-1));
+        Staedte = (desti*) realloc(Staedte,sizeof(desti)*(row_count-1));
 
         char *field = strtok(buf, ",");
         while (field) {
