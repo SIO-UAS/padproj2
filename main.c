@@ -66,7 +66,7 @@ int main()
             if (field_count == 10) {
                 Staedte[row_count -2].id = atoi(field);
             }
-                field = strtok(NULL, ",");
+                field = strtok(NULL, "\",");
                 field_count++;
             }
 
