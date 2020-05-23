@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "struct.h"
 
-typedef struct {
+/*typedef struct {
   char *city_n;
   char *country;
   char *iso;
@@ -12,7 +13,7 @@ typedef struct {
   short int cap;
   int pop;
 }desti;
-
+*/
 char* myStrDub(char* s){
     char* ret = NULL;
     int til = 0;
@@ -176,7 +177,7 @@ int main()
         char *field = strtok(buf, "\"\",");
         while (field) {
             field = myStrCut(field, 2, myStrLen(field)-1);
-            
+
             if (field_count == 1) {
                 Staedte[row_count -2].city_n = myStrDub(field);
                 //printf("%s",Staedte[row_count -2].city_n);
