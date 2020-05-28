@@ -1,0 +1,1 @@
+int rcs(FILE*, desti*);
