@@ -4,8 +4,11 @@ char* myStrDub(char* s){
     char* ret = NULL;
     int til = 0;
     while(s[til] != '\0'){
+
+      til++;
     }
     ret = calloc(til+1, sizeof(char));
+
     if(ret == NULL){
         printf("Something went horible wrong");
         return NULL;
@@ -13,6 +16,7 @@ char* myStrDub(char* s){
     for(int i = 0; i< til; i++){
         ret[i] = s[i];
     }
+
     return ret;
 }
 
@@ -116,7 +120,7 @@ char* myStrCut(char* s, int a, int b){
     return ret;
 }
 
-int rcs(FILE *csvSt, desti *Staedte){ //Nimmt den File pointer Entgegen und auch den Pointer auf das (leere) Array. Nur einmal Aufrufen!
+desti* rcs(FILE *csvSt, desti *Staedte, int *dc){ //Nimmt den File pointer Entgegen und auch den Pointer auf das (leere) Array. Nur einmal Aufrufen!
   Staedte = (desti*) realloc(Staedte, sizeof(desti));
   desti* test = NULL;
 
@@ -124,19 +128,23 @@ int rcs(FILE *csvSt, desti *Staedte){ //Nimmt den File pointer Entgegen und auch
   int row_count = 0;
   int field_count = 0;
   int z = 0;
+
   while (fgets(buf, 1024, csvSt)) {
 
       field_count = 0;
       row_count++;
 
+
       if (row_count == 1) {
           continue;
       }
       test = (desti*) realloc(Staedte,sizeof(desti)*(row_count-1));
+
       if(test == NULL){
           break;
       }
       else{
+
           Staedte = test;
       }
       if((row_count % 100)==1){
@@ -145,10 +153,13 @@ int rcs(FILE *csvSt, desti *Staedte){ //Nimmt den File pointer Entgegen und auch
 
       char *field = strtok(buf, "\"\",");
       while (field) {
+
           field = myStrCut(field, 2, myStrLen(field)-1);
 
           if (field_count == 1) {
+
               Staedte[row_count -2].city_n = myStrDub(field);
+
               //printf("%s",Staedte[row_count -2].city_n);
           }
           if (field_count == 2) {
@@ -175,9 +186,12 @@ int rcs(FILE *csvSt, desti *Staedte){ //Nimmt den File pointer Entgegen und auch
           }
               field = strtok(NULL, ",");
               field_count++;
+
           }
 
       }
-      return row_count;
+      *dc = row_count;
+      //fclose(csvSt);
+      return Staedte;
 
 }
