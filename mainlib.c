@@ -1,13 +1,8 @@
 #include "depen.h"
 #include "csv.h"
+#include "search.h"
 
-int searchid(desti *Staedte, int id, int max){ // Wurst Käs Zenario jet
-  int x = 0;
-  while(x < max && Staedte[x].id != id){
-    x++;
-  }
-  return x;
-}
+
 
 
 int main(){
