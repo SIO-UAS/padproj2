@@ -3,5 +3,5 @@ project(libtest)
 
 
 add_library(csv  csv.c)
-add_executable(mainlib main.c)
+add_executable(mainlib mainlib.c)
 target_link_libraries(mainlib csv)
