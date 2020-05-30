@@ -33,6 +33,19 @@ int main(){
   x = searchid(Staedte, 1124019423, data_c);
   printf("%s %s %s %f %f %d %d\n",Staedte[x].city_n,Staedte[x].country,Staedte[x].iso,Staedte[x].lat,Staedte[x].lng,Staedte[x].pop,Staedte[x].id );
 
+  int res = 0;
+  x=0;
+  printf("Searching for ISO AUT... \n");
+  desti* sres = searchISO(Staedte, "AUT", data_c, &res);
+  if(sres == NULL){
+    printf("Fehler bei der Suche!\n");
+    return 0;
+  }
+  printf("Gefunden : %d Ergebnisse\n", res);
+  while(x < res){
+    printf("%s %s %s %f %f %d %d\n",sres[x].city_n,sres[x].country,sres[x].iso,sres[x].lat,sres[x].lng,sres[x].pop,sres[x].id );
+    x++;
+  }
 
 
 }
