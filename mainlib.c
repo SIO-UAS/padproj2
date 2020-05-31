@@ -34,7 +34,7 @@ int main(){
   printf("%s %s %s %f %f %d %d\n",Staedte[x].city_n,Staedte[x].country,Staedte[x].iso,Staedte[x].lat,Staedte[x].lng,Staedte[x].pop,Staedte[x].id );
 
   int res = 0;
-  x=0;
+
   printf("Searching for ISO AUT... \n");
   desti* sres = searchISO(Staedte, "AUT", data_c, &res);
   if(sres == NULL){
@@ -42,10 +42,38 @@ int main(){
     return 0;
   }
   printf("Gefunden : %d Ergebnisse\n", res);
+  x=0;
   while(x < res){
     printf("%s %s %s %f %f %d %d\n",sres[x].city_n,sres[x].country,sres[x].iso,sres[x].lat,sres[x].lng,sres[x].pop,sres[x].id );
     x++;
   }
 
+  res = 0;
+  printf("Searching for City(s) named Vienna... \n");
+  sres = searchName(Staedte, "Vienna", data_c, &res);
+  if(sres == NULL){
+    printf("Fehler bei der Suche!\n");
+    return 0;
+  }
+  printf("Gefunden : %d Ergebnisse\n", res);
+  x=0;
+  while(x < res){
+    printf("%s %s %s %f %f %d %d\n",sres[x].city_n,sres[x].country,sres[x].iso,sres[x].lat,sres[x].lng,sres[x].pop,sres[x].id );
+    x++;
+  }
+
+  res = 0;
+  printf("Searching for City(s) named Paris... \n");
+  sres = searchName(Staedte, "Paris", data_c, &res);
+  if(sres == NULL){
+    printf("Fehler bei der Suche!\n");
+    return 0;
+  }
+  printf("Gefunden : %d Ergebnisse\n", res);
+  x=0;
+  while(x < res){
+    printf("%s %s %s %f %f %d %d\n",sres[x].city_n,sres[x].country,sres[x].iso,sres[x].lat,sres[x].lng,sres[x].pop,sres[x].id );
+    x++;
+  }
 
 }
