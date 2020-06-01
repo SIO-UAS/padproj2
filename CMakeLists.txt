@@ -4,5 +4,6 @@ project(libtest)
 
 add_library(csv  csv.c)
 add_library(search search.c)
+add_library(sort sort.c)
 add_executable(mainlib mainlib.c)
-target_link_libraries(mainlib csv search)
+target_link_libraries(mainlib csv search sort)
