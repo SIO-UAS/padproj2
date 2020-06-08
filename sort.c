@@ -45,48 +45,50 @@ desti* inSort_pop(desti *Staedte, int max, int dir){ //insertion sort
   return Staedte;
 }
 
-desti* aBucketSort(desti *Steadte, int max){
+desti* bucket_sb(desti* Staedte, int max, int sortkret){ //Emergency Bucket_sortbaka (in order to avoid two times the same letter) This is stupid i know, but memory friendly
   desti* result = NULL;
   desti* test = NULL;
-  desti** buckets = (desti**)malloc(26*sizeof(desti*));
-  int into;
-  int n[26];
-  for(int i = 0; i < 26; i++){
-    n[i] = 0;
+  int x =0;
+  char det;
+  for(int a =0; a<26; a++){
+    printf("\nDurchlauf Nr. %d", a);
+    for(int i = 0; i<max; i++){
+      switch(sortkret){
+        case 0:   //Nach Staedtenamen
+        if(Staedte[i].city_n != NULL){
+          det = Staedte[i].city_n[0];
+          if(det >= 'a'){
+            det-='a';
+            det+='A';
+          }
+          else{
+
+          }
+        }
+        else{}
+        break;
+        default:
+        break;
+      }
+      if((i % 1000) ==1){
+        printf("|");
+      }
+      //printf("x: %d ... a : %c ... det : %c", x,((char)a)+'A', det);
+      if(det == ((char)a)+'A'){
+        test = realloc(result, sizeof(desti)*(x+1));
+        if(test != NULL){
+          result = test;
+        }
+        else{
+          return result;
+        }
+        result[x]=Staedte[i];
+        x++;
+      }
+
+    }
+
   }
 
-    for(int i = 0; i<max; i++){
-
-      if(Steadte[i].city_n != NULL){
-        if(Steadte[i].city_n[0] > 96){
-          into = (int)(Steadte[i].city_n[0] - 'a');
-        }
-        else{
-          into = (int)(Steadte[i].city_n[0] - 'A');
-        }
-        n[into]++;
-        test = realloc(buckets[into], sizeof(desti)*n[into]);
-        if(test != NULL){
-          buckets[into] = test;
-          buckets[into][n[into]] = Steadte[i];
-        }
-
-      }
-
-    }
-
-    result = (desti*)malloc(sizeof(desti*) * max);
-    int z = 0;
-    for(int i=0; i < 26; i++){
-      for(int b=0; b< n[i]; b++){
-        if(z < max){
-          result[z]=buckets[i][b];
-          z++;
-        }
-        else{
-          printf("I have a Question: HOW?");
-        }
-      }
-    }
-    return result;
+  return result;
 }
