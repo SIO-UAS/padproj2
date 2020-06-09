@@ -67,6 +67,32 @@ desti* bucket_sb(desti* Staedte, int max, int sortkret){ //Emergency Bucket_sort
         }
         else{}
         break;
+        case 1:
+        if(Staedte[i].iso != NULL){
+          det = Staedte[i].iso[0];
+          if(det >= 'a'){
+            det-='a';
+            det+='A';
+          }
+          else{
+
+          }
+        }
+        else{}
+        break;
+        case 2:
+        if(Staedte[i].country != NULL){
+          det = Staedte[i].country[0];
+          if(det >= 'a'){
+            det-='a';
+            det+='A';
+          }
+          else{
+
+          }
+        }
+        else{}
+        break;
         default:
         break;
       }
