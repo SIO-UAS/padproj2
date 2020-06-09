@@ -82,7 +82,8 @@ desti* bucket_sb(desti* Staedte, int max, int sortkret){ //Emergency Bucket_sort
         else{
           return result;
         }
-        result[x]=Staedte[i];
+        result[x]=(Staedte[i]);
+        printf("R: %s <- %s : S\n", result[x].city_n, Staedte[i].city_n);
         x++;
       }
 
