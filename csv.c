@@ -1,4 +1,5 @@
 #include "depen.h"
+#include <math.h>
 
 char* myStrDub(char* s){
     char* ret = NULL;
@@ -120,6 +121,32 @@ char* myStrCut(char* s, int a, int b){
     return ret;
 }
 
+char* defaultsFile(char* FileN){ // Zum Speichern des default Speicherpfades wird eine weitere Datei angelegt/ liefert dateinamen zurück //Experimental
+  FILE *defaultF;
+  char buff[1000];
+  char *dfname = "default.txt";
+  defaultF = fopen(dfname, "r");
+  if(defaultF == NULL){
+    defaultF = fopen(dfname, "w");
+    if(FileN == NULL){
+      fprintf(defaultF,"../worldcities.csv");
+      return "../worldcities.csv";
+    }
+    else{
+      fprintf(defaultF, "%s", FileN);
+      return FileN;
+    }
+  }
+  if(FileN == NULL && defaultF != NULL){
+    if(fgets(buff, 1024, defaultF) != NULL){
+      return myStrDub(buff);
+    }
+
+  }
+  //?????
+  return FileN;
+}
+
 desti* rcs(FILE *csvSt, desti *Staedte, int *dc){ //Nimmt den File pointer Entgegen und auch den Pointer auf das (leere) Array. Nur einmal Aufrufen!
   Staedte = (desti*) realloc(Staedte, sizeof(desti));
   desti* test = NULL;
@@ -191,7 +218,25 @@ desti* rcs(FILE *csvSt, desti *Staedte, int *dc){ //Nimmt den File pointer Entge
 
       }
       *dc = row_count;
+
       //fclose(csvSt);
       return Staedte;
 
+}
+
+void append_csv(char* filen, desti *toadd, int count){ // Experimental code
+  if(filen != NULL && toadd != NULL){
+    FILE *csv = fopen(filen, "a");
+    int x = 0;
+    if(csv != NULL){
+      while(x<count){
+        fprintf(csv,"\"%s\",\"%s\",\"%f\",\"%f\",\"%s\",\"%c%c\",\"%s\",\"%s\",\"no\",\"%d\",\"%d\"\n", toadd[x].city_n, toadd[x].city_n, toadd[x].lat, toadd[x].lng, toadd[x].country, toadd[x].iso[0], toadd[x].iso[1], toadd[x].iso, toadd[x].city_n, toadd[x].pop, toadd[x].id);
+        x++;
+      }
+    }
+    else{
+      printf("Nope, konnte es ned öffnen, vielleicht Falscher Pfad/Name oder keine Berechtigung");
+    }
+  }
+  printf("Daten nicht vorhanden!");
 }
