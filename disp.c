@@ -12,3 +12,10 @@ void disp_dlistad(desti* to, int count){ //display desti list all data
   }
 
 }
+
+void printMap_Link(float lat, float log){ //Print Openstreetmap Link to Cordinates
+
+  printf("https://www.openstreetmap.org/search?query=%f%%2C%f", lat, log);
+
+  return;
+}
