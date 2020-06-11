@@ -40,11 +40,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="distance.h" />
+		<Unit filename="exp.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="mainlib.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="route.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="route.h">
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="search.c">
 			<Option compilerVar="CC" />
