@@ -3,8 +3,8 @@ struct desti{
   char *country;
   char *iso;
   float lat;
-  flaot lng;
+  float lng;
   int id;
   short int cap;
   int pop;
-}
+};
