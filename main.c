@@ -1,221 +1,39 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "struct.h"
+#include <random>
+#include 'depen.h'
 
-/*typedef struct {
-  char *city_n;
-  char *country;
-  char *iso;
-  double lat;
-  double lng;
-  int id;
-  short int cap;
-  int pop;
-}desti;
-*/
-char* myStrDub(char* s){
-    char* ret = NULL;
-    int til = 0;
-    while(s[til] != '\0'){ //Mit sizeof(*s)/sizeof(char) hat nicht funktioniert und nur 1 ausgegeben :( (&s, s) haben immer acht ausgegeben
-        til++;
-    }
-    ret = calloc(til+1, sizeof(char));
-    if(ret == NULL){
-        printf("Something went horible wrong");
-        return NULL;
-    }
-    for(int i = 0; i< til; i++){
-        ret[i] = s[i];
-    }
-    return ret;
-}
+typedef struct{
 
-char* myStrRev(char* s){
-    char* ret = NULL;
-    int til = 0;
-    while(s[til] != '\0'){
-        til++;
-    }
-    ret = calloc(til+1, sizeof(char));
-    if(ret == NULL){
-        printf("Something went horible wrong");
-        return NULL;
-    }
-    for(int i = 0; i< til; i++){
-        ret[i] = s[(til-1)-i];
-    }
-    return ret;
-}
+    desti Stadt;
+    Node* next;
+    Node* prev;
 
-int myStrLen(char* s){
-    int til = 0;
-    while(s[til] != '\0'){
-        til++;
-    }
-    return til;
-}
+}Node;
 
-char* myStrCut(char* s, int a, int b){
-    char* ret = NULL;
-    int max = 0;
-    int revc = 0;
+int lenList(Node* head);
 
-     //
-    if (a>b){
-      revc = 1;
-    int temp =0;
-    temp =b;
-    b = a;
-    a = temp;
-
-    }
-    else{
-      revc = 0;
-    }
-    a--;
-    max = myStrLen(s);
-
-    if(s == NULL){
-      return NULL;
-    }
+//### still needs to be made
+Node* broot_force(Node* head);//######
+void print_route(Node* head);
+void csv_route(Node* head); //########
+void free_List(Node* head);
 
 
-    if((a < 0 && b <0) || (a > max && b > max)){
-        ret = calloc(1, sizeof(char));
-        return ret;
-    }
-    if((a < 0 && b > max) || (a > max && b < 0)){
-      if(revc > 0){
-        ret = myStrRev(s);
-      }
-      else{
-        ret = myStrDub(s);
-      }
-      return ret;
-    }
-    if(a > max || b > max){
-      if(revc > 0 ){
-        a = max;
-//printf("a = max");
-      }
-      else{
-//printf("B = max");
-        b = max;
-      }
-    }
-    if(a < 0 || b < 0){
-      if(revc){
-    b = 0;
-      }
-      else{
-        a=0;
-      }
+Node* create_List(desti* Staedte);
+Node* two_opt(Node* head);
+Node* switch_List(Node* head,int node1 ,int node2);
+Node* find_node(Node* head, int index);
 
-    }
+double length_of_route(Node* head);
+
+int routen_planer(desti* Staedte);// die pulic funktion erhalät das array und ruft die anderen funktionen auf, ertzeigt die csv datei und printet die routen zur console
 
 
-        ret = calloc((b-a)+1, sizeof(char));
-        if(ret == NULL){
-            printf("Something went horibly wrong");
-            return NULL;
-        }
-    //printf("Cutting %s von %d bis %d\n",s ,a, b);
-        for(int i = 0; i< (b-a); i++){
-            ret[i] = s[i+a];
-//printf("Â¬%d, b=%d", (i+a), b);
 
-        }
-//printf("%s", ret);
-        if(revc > 0){
-          return myStrRev(ret);
-        }
-        else{
-          return ret;
-      }
+int main(){
 
-    return ret;
-}
+    Node* ARR = NULL;
 
-int main()
-{
-    FILE *csvSt, *csvRo;
-
-    csvSt = fopen("worldcities.csv","r");
-
-    if( csvSt == NULL){
-        printf("Fehler beim ï¿½ffnen der Datei");
-    }
-    desti* Staedte = NULL;
-    desti* test = NULL;
-
-    Staedte = (desti*) realloc(Staedte, sizeof(desti));
-
-    char buf[1024];
-    long int row_count = 0;
-    int field_count = 0;
-    int z = 0;
-    while (fgets(buf, 1024, csvSt)) {
-
-        field_count = 0;
-        row_count++;
-
-        if (row_count == 1) {
-            continue;
-        }
-        test = (desti*) realloc(Staedte,sizeof(desti)*(row_count-1));
-        if(test == NULL){
-            break;
-        }
-        else{
-            Staedte = test;
-        }
-        if((row_count % 100)==1){
-            z++;
-        }
-
-        char *field = strtok(buf, "\"\",");
-        while (field) {
-            field = myStrCut(field, 2, myStrLen(field)-1);
-
-            if (field_count == 1) {
-                Staedte[row_count -2].city_n = myStrDub(field);
-                //printf("%s",Staedte[row_count -2].city_n);
-            }
-            if (field_count == 2) {
-                Staedte[row_count -2].lat = atof(field);
-                //printf("%f",Staedte[row_count -2].lat);
-            }
-            if (field_count == 3) {
-                Staedte[row_count -2].lng = atof(field);
-            }
-            if (field_count == 4) {
-                Staedte[row_count -2].country = myStrDub(field);
-            }
-            if (field_count == 6) {
-                Staedte[row_count -2].iso = myStrDub(field);
-            }
-            if (field_count == 8 && (strcmp(field,"primary") == 0)) {
-                Staedte[row_count -2].cap = 1;
-            }
-            if (field_count == 9) {
-                Staedte[row_count -2].pop = atoi(field);
-            }
-            if (field_count == 10) {
-                Staedte[row_count -2].id = atoi(field);
-            }
-                field = strtok(NULL, ",");
-                field_count++;
-            }
-
-        }
-
-    fclose(csvSt);
-    int x = 0;
-    while(x <= row_count){
-        printf("%s %s %s %f %f %d %d\n",Staedte[x].city_n,Staedte[x].country,Staedte[x].iso,Staedte[x].lat,Staedte[x].lng,Staedte[x].pop,Staedte[x].id );
-        x++;
-    }
+    int i = rand(0,);//len of the list
 
 
 
@@ -223,3 +41,254 @@ int main()
 
     return 0;
 }
+void print_route(Node*head){
+    double len = length_of_route(head);
+    printf("The Optimal Route is:\n");
+
+    while(head != NULL){
+        printf("%30s... %3s\n",head.Stadt.city_n,head.Stadt.iso);
+        head = head->next
+    }
+    printf("With a total Distance of %10f km",len);
+}
+void csv_route(Node*head){
+    FILE *csv_Safe;
+
+    csv_Safe = fopen("route.csv","w");
+
+    if( csvSt == NULL){
+        printf("Fehler beim Erstellen der Datei");
+    }
+    while(head != NULL){
+        fprintf(csv_Safe,"%s,%s,%s,%d,%d,%f,%f\n",head.Stadt.city_n,head.Stadt.country,head.Stadt.iso,head.Stadt.pop,head.Stadt.id,head.Stadt.lat,head.Stadt.lng);
+        head = head->next;
+    }
+    fclose(csv_Safe);
+
+
+}
+void free_List(Node* head){
+
+   Node *tmp;
+    if (head == NULL){
+        return NULL;
+    }
+
+    while(head->next =! NULL){
+        free(head.Stadt);
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+    free(head.Stadt);
+    free(head);
+    *tail = NULL;
+    return NULL;
+
+
+}
+
+int routen_planer(desti* Staedte){
+    if(Staedte == NULL){printf("Computer says NO!!!! #Staedte empty")return 0;}
+    Node* head = NULL;
+    head = create_List(Staedte);
+    head = two_opt(head);
+    print_route(head);
+    csv_route(head);
+    free_List(head);
+    return 1;
+}
+int lenList(Node* head){ // #done lv1
+    int len =0;
+    if(head == NULL){
+        //printf("liste lehr")
+        return 0;
+    }
+    while(head != NULL){
+       len++;
+       head = head->next;
+    }
+    return len;
+}
+
+double length_of_route(Node* head){
+
+    double Route_len = 0;
+    int L_len = lenList(head);
+    Node* tmp = head;
+
+    if(head == NULL){
+        //printf("liste lehr")
+        return 0;
+    }
+
+    while(tmp->next != NULL){
+
+        len = len + DistanceAB(tmp.Stadt.lat,tmp->next.Stadt.lat,tmp.Stadt.lng,tmp->next.Stadt.lng);
+        tmp = tmp->next;
+
+    }
+    len = len + DistanceAB(head.Stadt.lat,tmp.Stadt.lat,head.Stadt.lng,tmp.Stadt.lng)
+
+    return len;
+}
+
+Node* create_List(desti* Staedte){
+    int len= sizeof(Staedte)/sizeof(Staedte[0]);
+    Node* head = NULL;
+    for(int x=0; x<len; x++){
+        head = add_back(head,Staedte[x]);
+    }
+    return head;
+}
+Node* two_opt(Node* head){// need testing and tooning
+    int i = 0,e = 0, len = lenList(head), run = 1, changes = 0, actions = 0;
+    double lenght_now = 0, length_after = 0;
+
+
+    while(run){
+
+
+            i = rand(1,len);
+            e = rand(1,len);
+            if (e == i){continue;}
+            lenght_now = length_of_route();//check len of rout before switch
+            head = switch_List(head,i,e); // switch to random elements
+            length_after = length_of_route();//check len of rout after switch
+            if (length_after>lenght_now){ // if change is not helpful undo
+                head = switch_List(head,i,e);
+                changes--;
+            }
+            changes++;
+            actions++;
+
+
+        if (actions > changes*5 && actions > len*3 ){ // if after the ####### nochmal anschauen und optimieren
+            break;
+        }
+    }
+    return head;
+}
+Node* switch_List(Node* head,int node1 ,int node2){
+    Node* tmp_node1 = find_node(head,node1);
+    Node* tmp_node2 = find_node(head,node2);
+    Node* tmp_np1 = find_node(head,node1-1);
+    Node* tmp_np2 = find_node(head,node2-1);
+    Node* tmp_nn1 = find_node(head,node1+1);
+    Node* tmp_nn2 = find_node(head,node2+1);
+
+
+    if(head == NULL){
+        //printf("liste lehr")
+        return NULL;
+    }
+
+
+
+    tmp_node1.next = tmp_nn2;
+    tmp_node2.next = tmp_nn1;
+    tmp_node1.prev = tmp_np2;
+    tmp_node2.prev = tmp_np1;
+
+    tmp_nn1.prev = tmp_node2;
+    tmp_nn2.prev = tmp_node1;
+
+    tmp_np1.next = tmp_node2;
+    tmp_np2.next = tmp_node1;
+
+    if (tmp_node1 == head){
+        return tmp_node2;
+    }
+    if (tmp_node2 == head){
+        return tmp_node1;
+    }
+    return head;
+}
+Node* find_node(Node* head, int index){
+
+    for(int x=1; x<index; x++){
+        head = head->next;
+    }
+    return head;
+}
+Node* add_back(Node* head,desti* Staedte){ //add Back #### kann man stsedte einfach kopieren als ganzes ????????
+    Node *p;
+    Node *newNode = malloc(sizeof(Node));
+    if (newNode == NULL) {return NULL;}
+
+    newNode.Stadt = Staedte;
+
+    if (head == NULL){
+
+        newNode->next = NULL;
+        newNode->prev = NULL;
+        return newNode;
+    }
+
+    for (p=head; p->next !=NULL; p = p->next);
+    newNode->next = NULL;
+    newNode->prev = p;
+    p->next = newNode;
+    return head;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Node routen_spliter(arr){
+
+    int len_oriArr = sizeof(arr)/sizeof(arr[0]);
+
+    Node p_Arr[len_oriArr];
+    char tmp_isos[len_oriArr][3];
+    Node *tmp = NULL;
+    int size = len_oriArr, i, j, k;
+    for (int x= 0; x< len_oriArr ; x++){ // len of ori array mit den städten
+           tmp_isos[x] = arr[x].iso;
+    }
+    for(i=0; i<size; i++){ //delete duplicate isos
+        for(j=i+1; j<size; j++)
+        {
+            if(strcmp(tmp_isos[i], tmp_isos[j]) == 0)
+            {
+
+                for(k=j; k<size; k++)
+                {
+                    tmp_isos[k] = tmp_isos[k + 1];
+                }
+
+
+                size--;
+
+                j--;
+            }
+        }
+    }
+
+
+    calloc(c_counter+1,sizeof(Node));
+
+
+
+
+
+
+
+
+}*/
