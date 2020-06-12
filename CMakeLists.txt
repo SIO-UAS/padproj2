@@ -10,5 +10,5 @@ add_library(disp disp.c)
 add_library(dist distance.c)
 add_library(route route.c)
 
-add_executable(mainlib mainlib.c)
-target_link_libraries(mainlib csv search sort del disp dist route)
+add_executable(demo main.c)
+target_link_libraries(demo csv search sort del disp dist route)
