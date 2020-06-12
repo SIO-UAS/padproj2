@@ -10,10 +10,8 @@ typedef struct Node{
 
 int lenList(Node* head);
 
-//### still needs to be made
-Node* broot_force(Node* head);//######
 void print_route(Node* head);
-void csv_route(Node* head); //########
+void csv_route(Node* head);
 void free_List(Node* head);
 
 
@@ -25,14 +23,13 @@ Node* add_back(Node* head,desti Staedte);
 
 double length_of_route(Node* head);
 
-int routen_planer(desti* Staedte, int count);// die pulic funktion erhalät das array und ruft die anderen funktionen auf, ertzeigt die csv datei und printet die routen zur console
-
-int zufall(int a, int b){ //Bereich
+int routen_planer(desti* Staedte, int count);
+int zufall(int a, int b){ //gives a random number in a range a,b
     return a+rand()%b;
 
 }
 
-void print_route(Node*head){
+void print_route(Node*head){//prints the route to the console
     double len = length_of_route(head);
     printf("The Optimal Route is:\n");
 
@@ -42,7 +39,8 @@ void print_route(Node*head){
     }
     printf("With a total Distance of %10f km",len);
 }
-void csv_route(Node*head){
+void csv_route(Node*head){//safes the route to a csv
+    double len = length_of_route(head);
     FILE *csv_Safe;
 
     csv_Safe = fopen("route.csv","w");
@@ -54,11 +52,12 @@ void csv_route(Node*head){
         fprintf(csv_Safe,"%s,%s,%s,%d,%d,%f,%f\n",head->Stadt.city_n,head->Stadt.country,head->Stadt.iso,head->Stadt.pop,head->Stadt.id,head->Stadt.lat,head->Stadt.lng);
         head = head->next;
     }
+    fprintf(csv_Safe,"Die Gesamtdistanz beträgt %d km\n", len);
     fclose(csv_Safe);
 
 
 }
-void free_List(Node* head){
+void free_List(Node* head){//frees the list
 
    Node *tmp;
     if (head == NULL){
@@ -79,7 +78,7 @@ void free_List(Node* head){
 
 }
 
-int routen_planer(desti* Staedte, int count){
+int routen_planer(desti* Staedte, int count){// controlls the route planing process
     if(Staedte == NULL){printf("Computer says NO!!!! #Staedte empty");return 0;}
     Node* head = NULL;
     head = create_List(Staedte, count);
@@ -89,7 +88,7 @@ int routen_planer(desti* Staedte, int count){
     free_List(head);
     return 1;
 }
-int lenList(Node* head){ // #done lv1
+int lenList(Node* head){ //gives the len. of the list as a int
     int len =0;
     printf("len start");
     if(head == NULL){
@@ -104,7 +103,7 @@ int lenList(Node* head){ // #done lv1
     return len;
 }
 
-double length_of_route(Node* head){
+double length_of_route(Node* head){ //cal the len. of the list
 
     double Route_len = 0;
     //int L_len = lenList(head);
@@ -127,7 +126,7 @@ double length_of_route(Node* head){
     return len;
 }
 
-Node* create_List(desti* Staedte, int count){
+Node* create_List(desti* Staedte, int count){//takes the desti array and makes a list out of it
     int len= count;
     Node* head = NULL;
     for(int x=0; x<len; x++){
@@ -135,7 +134,7 @@ Node* create_List(desti* Staedte, int count){
     }
     return head;
 }
-Node* two_opt(Node* head){// need testing and tooning
+Node* two_opt(Node* head){//switches two random nodes until it finds a optimal route Solution
     int i = 0,e = 0, len = lenList(head), run = 1, changes = 0, actions = 0;
     double lenght_now = 0, length_after = 0;
 
@@ -163,33 +162,15 @@ Node* two_opt(Node* head){// need testing and tooning
     }
     return head;
 }
-Node* switch_List(Node* head,int node1 ,int node2){
+Node* switch_List(Node* head,int node1 ,int node2){//swaps to list nodes
     Node* tmp_node1 = find_node(head,node1);
     Node* tmp_node2 = find_node(head,node2);
-    /*Node* tmp_np1 = find_node(head,node1-1);
-    Node* tmp_np2 = find_node(head,node2-1);
-    Node* tmp_nn1 = find_node(head,node1+1);
-    Node* tmp_nn2 = find_node(head,node2+1);*/
     Node* tmp = NULL;
 
     if(head == NULL){
         //printf("liste lehr")
         return NULL;
     }
-
-
-    /*
-    tmp_node1->next = tmp_nn2;
-    tmp_node2->next = tmp_nn1;
-    tmp_node1->prev = tmp_np2;
-    tmp_node2->prev = tmp_np1;
-
-    tmp_nn1->prev = tmp_node2;
-    tmp_nn2->prev = tmp_node1;
-
-    tmp_np1->next = tmp_node2;
-    tmp_np2->next = tmp_node1;
-     */
 
 
     tmp = tmp_node1->next;
@@ -217,14 +198,14 @@ Node* switch_List(Node* head,int node1 ,int node2){
     }
     return head;
 }
-Node* find_node(Node* head, int index){
+Node* find_node(Node* head, int index){//finds a node by number index starts at 1
 
     for(int x=1; x<index; x++){
         head = head->next;
     }
     return head;
 }
-Node* add_back(Node* head,desti Staedte){ //add Back #### kann man stsedte einfach kopieren als ganzes ????????
+Node* add_back(Node* head,desti Staedte){ // creates a node out of a desti struct and adds it to the list
     Node *p;
     Node *newNode = malloc(sizeof(Node));
     if (newNode == NULL) {return NULL;}
