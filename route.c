@@ -1,4 +1,5 @@
 #include "depen.h"
+#include "distance.h"
 
 typedef struct Node{
 
@@ -52,7 +53,7 @@ void csv_route(Node*head){//safes the route to a csv
         fprintf(csv_Safe,"%s,%s,%s,%d,%d,%f,%f\n",head->Stadt.city_n,head->Stadt.country,head->Stadt.iso,head->Stadt.pop,head->Stadt.id,head->Stadt.lat,head->Stadt.lng);
         head = head->next;
     }
-    fprintf(csv_Safe,"Die Gesamtdistanz beträgt %d km\n", len);
+    fprintf(csv_Safe,"Die Gesamtdistanz betrï¿½gt %lf km\n", len);
     fclose(csv_Safe);
 
 
@@ -225,7 +226,3 @@ Node* add_back(Node* head,desti Staedte){ // creates a node out of a desti struc
     p->next = newNode;
     return head;
 }
-
-
-
-
