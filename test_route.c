@@ -7,7 +7,7 @@
 #include "distance.h"
 #include "route.h"
 
-void test_route(void){
+void test_route(void){ //tests the route planer function and thus also the hole route.c&h
   FILE *csvSt, *csvRo, csvback;
 
   csvSt = fopen("worldcities.csv","r");
@@ -24,9 +24,6 @@ void test_route(void){
   printf("Daten Eingelesen %d Datensaetze gefunden Speicheradr: %p\n", data_c, Staedte);
 
   fclose(csvSt);
-
-
-
 
 
 
