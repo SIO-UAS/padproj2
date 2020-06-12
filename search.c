@@ -3,6 +3,7 @@
 
 int searchid(desti *Staedte, int id, int max){ // Wurst Käs Zenario jet
   int x = 0;
+
   while(x < max && Staedte[x].id != id){
     x++;
   }
@@ -33,6 +34,7 @@ desti* searchISO(desti *Staedte, char* iso, int max, int *rc){
             }
             result = test;
             result[*rc-1] = (Staedte[x]);
+            //printf("passed\n");
             (*rc)++;
           }
           else{}
@@ -47,7 +49,8 @@ desti* searchISO(desti *Staedte, char* iso, int max, int *rc){
       x++;
 
     }
-  
+    //printf("Suche abgeschlossen\n");
+
     return result;
 }
 
@@ -66,7 +69,7 @@ desti* searchName(desti *Staedte, char* name, int max, int *rc){
 
         if(strcmp(Staedte[x].city_n, name) == 0){
 
-          result = (desti*) realloc(result,(sizeof(desti))*(*rc));
+          result = (desti*) realloc(result,(sizeof(desti))*(*rc+1));
           result[*rc] = (Staedte[x]);
           (*rc)++;
 
