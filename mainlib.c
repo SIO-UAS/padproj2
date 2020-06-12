@@ -56,7 +56,7 @@ int main(){
     printf("%s %s %s %f %f %d %d\n",sres[x].city_n,sres[x].country,sres[x].iso,sres[x].lat,sres[x].lng,sres[x].pop,sres[x].id );
     x++;
   }*/
-  free(sres);
+  //free(sres);
 sres =NULL;
 printf("\n\n");
 /*  desti* testc = calloc(4, sizeof(desti));
@@ -80,7 +80,7 @@ printf("\n\n");
   printf("Gefunden : %d Ergebnisse\n", res);
   x=0;
   disp_dlistad(sres, res-1);
-  free(sres);
+  //free(sres);
 /*
   while(x < res){
     printf("%s %s %s %f %f %d %d\n",sres[x].city_n,sres[x].country,sres[x].iso,sres[x].lat,sres[x].lng,sres[x].pop,sres[x].id );
@@ -97,7 +97,7 @@ printf("\n\n");
   printf("Gefunden : %d Ergebnisse\n", res);
   x=0;
   disp_dlistad(sres, res);
-  free(sres);
+  //free(sres); Linux Laufzeitfehler
   //delete_all(sres, res);
   sres = NULL;
 /*
@@ -116,7 +116,7 @@ printf("\n\n");
   printf("\033[32m"); // Green
   disp_dlistad(sorted, data_c);
   printf("\033[0m");
-  free(sorted);
+  //free(sorted);
   printf("Sortieren Nach Population:\n");
 
   sorted = inSort_pop(Staedte, (data_c-2), 1);
@@ -124,7 +124,7 @@ printf("\n\n");
   disp_dlistad(sorted, data_c);
   printf("\033[0m");
   printf("Test");
-  free(sorted);
+  //free(sorted);
 
   printf("Sortieren Nach ersten char eines Staedtenamens:\n");
     /*while(x <= (data_c-2)){
