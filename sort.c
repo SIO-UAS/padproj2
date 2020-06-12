@@ -51,7 +51,7 @@ desti* bucket_sb(desti* Staedte, int max, int sortkret){ //Emergency Bucket_sort
   int x =0;
   char det;
   for(int a =0; a<26; a++){
-    printf("\nDurchlauf Nr. %d", a);
+    //printf("\nDurchlauf Nr. %d", a);
     for(int i = 0; i<max; i++){
       switch(sortkret){
         case 0:   //Nach Staedtenamen
@@ -97,7 +97,7 @@ desti* bucket_sb(desti* Staedte, int max, int sortkret){ //Emergency Bucket_sort
         break;
       }
       if((i % 1000) ==1){
-        printf("|");
+        //printf("|");
       }
       //printf("x: %d ... a : %c ... det : %c", x,((char)a)+'A', det);
       if(det == ((char)a)+'A'){
@@ -109,7 +109,7 @@ desti* bucket_sb(desti* Staedte, int max, int sortkret){ //Emergency Bucket_sort
           return result;
         }
         result[x]=(Staedte[i]);
-        printf("R: %s <- %s : S\n", result[x].city_n, Staedte[i].city_n);
+      //  printf("R: %s <- %s : S\n", result[x].city_n, Staedte[i].city_n);
         x++;
       }
 
