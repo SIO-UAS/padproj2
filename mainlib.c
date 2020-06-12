@@ -134,7 +134,7 @@ printf("\n\n");
     x=0;
     //disp_dlistad(Staedte, data_c);
     sorted = bucket_sb(Staedte, (data_c-2), 0);
-    printf("\033[35m"); //Magenta
+    printf("\033[31m"); //Magenta
     disp_dlistad(sorted, (data_c-2));
     printf("\033[0m");
   /*  while(sorted[x].city_n != NULL){
@@ -146,7 +146,7 @@ printf("\n\n");
     }*/
 
     printf("\n\n");
-    desti* q = calloc(15, sizeof(desti)); // Damit das Programm bei MacOS nicht während der kritischen laufzeit einen malloc Fehler hat
+    desti* q = calloc(15, sizeof(desti)); // Damit das Programm bei MacOS nicht während der kritischen laufzeit einen malloc Fehler hat / kann tritzdem auftreten
     //delete_all(sorted, (data_c-2));
     printf("gebe Speicher wieder frei:");
     delete_all(Staedte, (data_c-2));
