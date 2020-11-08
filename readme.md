@@ -8,4 +8,4 @@ dann make
 das Programm wieder in den übergeordneten ordner legen und ausführen :)
 
 
-main.c nicht mehr verwenden
+mainlib.c nicht mehr verwenden
